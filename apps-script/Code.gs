@@ -1352,7 +1352,7 @@ function doPost(e) {
               division: get("division"),
               status: get("status"),
               tier: get("tier") || "paid",
-              freeMockUsed: get("tier") !== "paid" && hasUsedMcqMockAttempt_(regId),
+              freeMockUsed: get("tier") === "free" && hasUsedMcqMockAttempt_(regId),
             },
           },
         });
@@ -1370,7 +1370,7 @@ function doPost(e) {
             division: reg.division,
             status: reg.status,
             tier: reg.tier || "paid",
-            freeMockUsed: reg.tier !== "paid" && hasUsedMcqMockAttempt_(reg.id),
+            freeMockUsed: reg.tier === "free" && hasUsedMcqMockAttempt_(reg.id),
           },
         });
       }
@@ -1394,7 +1394,7 @@ function doPost(e) {
           return jsonOut_({ ok: false, message: "আপনার রেজিস্ট্রেশন এখনও কনফার্ম হয়নি।" });
         }
         const examType = body.examType === "live" ? "live" : "mock";
-        const isFreeTier = reg.tier !== "paid";
+        const isFreeTier = reg.tier === "free";
 
         if (isFreeTier && examType === "live") {
           return jsonOut_({ ok: false, message: "লাইভ পরীক্ষা শুধু পেইড স্টুডেন্টদের জন্য। কোর্স কিনে আনলক করুন।" });
@@ -1555,7 +1555,7 @@ function doPost(e) {
         const reg = findRegistrationByStudentToken_(body.token);
         if (!reg) return jsonOut_({ ok: false, message: "Unauthorized — আবার লগইন করুন।" });
         if (reg.status !== "confirmed") return jsonOut_({ ok: false, message: "আপনার রেজিস্ট্রেশন এখনও কনফার্ম হয়নি।" });
-        if (reg.tier !== "paid") {
+        if (reg.tier === "free") {
           return jsonOut_({ ok: false, message: "এই পরীক্ষা শুধু পেইড স্টুডেন্টদের জন্য। কোর্স কিনে আনলক করুন।", upgradeRequired: true });
         }
         const examType = body.examType === "live" ? "live" : "mock";

@@ -40,7 +40,7 @@ export default function StudentPortal() {
   if (!profile) return <Loader full label="প্রোফাইল লোড হচ্ছে…" />;
 
   const confirmed = profile.status === "confirmed";
-  const isFree = profile.tier !== "paid";
+  const isFree = profile.tier === "free";
   const mcqEnabled = confirmed && (!isFree || !profile.freeMockUsed);
 
   return (
@@ -65,7 +65,7 @@ export default function StudentPortal() {
       <div className="mx-auto max-w-3xl px-4 py-6">
         {!confirmed && (
           <div className="mb-6 rounded-xl border border-[var(--color-marigold)]/40 bg-[var(--color-marigold)]/10 p-4 text-sm text-[var(--color-marigold-dark)]">
-            আপনার নিবন্ধন এখনও কনফার্ম হয়নি ({profile.status === "rejected" ? "রিজেক্টেড" : "পেন্ডিং"})।
+            আপনার রেজিস্ট্রেশন এখনও কনফার্ম হয়নি ({profile.status === "rejected" ? "রিজেক্টেড" : "পেন্ডিং"})।
             কনফার্ম হওয়ার পর পরীক্ষা দিতে পারবেন।
           </div>
         )}

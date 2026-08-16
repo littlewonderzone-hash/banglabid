@@ -130,9 +130,13 @@ function Registrations({ token }) {
               <div>
                 <p className="flex items-center gap-2 font-display font-bold text-[var(--color-ink)]">
                   {r.name}
-                  {r.tier !== "paid" && (
+                  {r.tier === "free" ? (
                     <span className="rounded-full bg-[var(--color-bluepen)]/15 px-2 py-0.5 text-[10px] font-bold text-[var(--color-bluepen)]">
-                      ফ্রি রেজিস্ট্রেশনকারী
+                      ফ্রি
+                    </span>
+                  ) : (
+                    <span className="rounded-full bg-[var(--color-greenpen)]/15 px-2 py-0.5 text-[10px] font-bold text-[var(--color-greenpen)]">
+                      পেইড
                     </span>
                   )}
                 </p>
